@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/css/home.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../static/js/functions.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $.ajax({
+          type: "GET",
+          url: "http://ysjcs.net:5014/getUser",
+          dataType: "json",
+          async: true,
+        })
+          .done(function (result) {
+            id = result.data[0];
+            username = result.data[1];
+            email = result.data[2];
+            document.getElementById("username").textContent = username;
+          })
+          .fail(function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+              swal({
+                title: "Error!",
+                text: jqXHR.statusText,
+                icon: "error",
+                button: null,
+              });
+              setTimeout(() => {
+                window.location.href = "/login";
+              }, 2000);
+            } else {
+              swal({
+                title: "Error!",
+                text: "An error occurred: " + errorThrown,
+                icon: "error",
+                button: "OK",
+              });
+            }
+          });
+
+        $("#logout").on("click", function () {
+          $.ajax({
+            type: "GET",
+            url: "http://ysjcs.net:5014/logout",
+            dataType: "json",
+          }).done(function () {
+            swal({
+              title: "Success",
+              text: "Logging you out....",
+              icon: "success",
+              button: null,
+            });
+            setTimeout(() => {
+              window.location.href = "/login";
+            }, 3000);
+          });
+        });
+
+        redirectPage("#type-chest", "/chest_yt");
+        redirectPage("#type-back", "/back_yt");
+        redirectPage("#type-arm", "/arm_yt");
+        redirectPage("#type-abs", "/abs_yt");
+        redirectPage("#type-leg", "/leg_yt");
+        redirectPage("#type-shoulder", "/shoulder_yt");
+        redirectPage("#profile", "/profile");
+        redirectPage("#myworkout", "/myworkout");
+        redirectPage("#favourite", "/favourite");
+      });
+    </script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-brand">
+        <img src="../static/images/logo.svg" alt="logo" />
+      </div>
+      <div class="navbar-user-icon">
+        <img src="../static/images/user.png" alt="User Icon" />
+        <div class="navbar-dropdown-menu">
+          <div class="navbar-dropdown-menu-item" id="profile">Profile</div>
+          <div class="navbar-dropdown-menu-item" id="myworkout">My workout</div>
+          <div class="navbar-dropdown-menu-item" id="favourite">Favourite</div>
+          <div class="navbar-dropdown-menu-item" id="logout">Logout</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="welcome-container">
+      <h1>Hi <span id="username"></span>👋</h1>
+    </div>
+
+    <div class="select-workout-container">
+      <div class="select-workout">
+        <p>Search for workout exercises</p>
+
+        <div class="workout-type" id="type-chest">
+          <img src="../static/images/chest-item.svg" alt="chest item" />
+        </div>
+
+        <div class="workout-type" id="type-back">
+          <img src="../static/images/back-item.svg" alt="back item" />
+        </div>
+
+        <div class="workout-type" id="type-arm">
+          <img src="../static/images/arm-item.svg" alt="arm item" />
+        </div>
+
+        <div class="workout-type" id="type-shoulder">
+          <img src="../static/images/shoulder-item.svg" alt="shoulder item" />
+        </div>
+
+        <div class="workout-type" id="type-leg">
+          <img src="../static/images/leg-item.svg" alt="leg item" />
+        </div>
+
+        <div class="workout-type" id="type-abs">
+          <img src="../static/images/abs-item.svg" alt="leg item" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

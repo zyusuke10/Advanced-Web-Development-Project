@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favourite</title>
+    <link rel="stylesheet" href="../static/css/favourite.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../static/js/functions.js"></script>
+    <script>
+      $(document).ready(function () {
+        redirectPage("#arrow", "/home");
+        $.ajax({
+          url: "http://ysjcs.net:5014/get_API_KEY",
+          method: "GET",
+          async: true,
+          dataType: "json",
+        })
+          .done(function (result) {
+            const apiKey = result.API_KEY;
+            $("#spinner").show();
+            $.ajax({
+              url: "http://ysjcs.net:5014/getFavourite",
+              method: "GET",
+              async: true,
+              dataType: "json",
+              contentType: "application/json",
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            })
+              .done(function (result) {
+                $("#spinner").hide();
+                if (result.length === 0) {
+                  $("#video-item-wrapper").append(
+                    '<div class="no-item-wrapper">' +
+                      '<h2 class="no-item-msg">Your favourite list is empty</h2>' +
+                      `<img src="../static/images/empty.svg/" alt="empty-icon" class="empty-icon">` +
+                      "</div>"
+                  );
+                } else {
+                  video_id_list = [];
+                  for (i = 0; i < result.length; i++) {
+                    video_id_list.push(result[i][2]);
+                  }
+                  for (i = 0; i < video_id_list.length; i++) {
+                    $.ajax({
+                      type: "GET",
+                      url: `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${video_id_list[i]}&key=${apiKey}`,
+                      dataType: "json",
+                    })
+                      .done(function (result) {
+                        $("#video-item-wrapper").append(
+                          `<div class="video-item" id="video-item-${result.items[0].id}" itemId = ${result.items[0].id}>` +
+                            `<a href="https://www.youtube.com/watch?v=${result.items[0].id}"><div class="video">` +
+                            `<img src="${result.items[0].snippet.thumbnails.high.url}" alt="video" class="thumbnail"/>` +
+                            "</div></a>" +
+                            `<p class="video-title">${result.items[0].snippet.title}</p>` +
+                            `<div class="add-container"><img src="../static/images/delete-bin.svg" alt="delete-btn" id="delete-btn"/></div>` +
+                            "</div>"
+                        );
+                      })
+                      .fail(function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 401) {
+                          swal({
+                            title: "Error!",
+                            text: jqXHR.statusText,
+                            icon: "error",
+                            button: null,
+                          });
+                          setTimeout(() => {
+                            window.location.href = "/login";
+                          }, 2000);
+                        } else {
+                          swal({
+                            title: "Error!",
+                            text: "An error occurred: " + errorThrown,
+                            icon: "error",
+                            button: "OK",
+                          });
+                        }
+                      });
+                  }
+                }
+              })
+              .fail(function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status === 401) {
+                  $("#spinner").hide();
+                  swal({
+                    title: "Error!",
+                    text: jqXHR.statusText,
+                    icon: "error",
+                    button: null,
+                  });
+                  setTimeout(() => {
+                    window.location.href = "/login";
+                  }, 2000);
+                } else {
+                  $("#spinner").hide();
+                  swal({
+                    title: "Error!",
+                    text: "An error occurred: " + errorThrown,
+                    icon: "error",
+                    button: "OK",
+                  });
+                }
+              });
+          })
+          .fail(function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+              swal({
+                title: "Error!",
+                text: jqXHR.statusText,
+                icon: "error",
+                button: null,
+              });
+              setTimeout(() => {
+                window.location.href = "/login";
+              }, 2000);
+            } else {
+              swal({
+                title: "Error!",
+                text: "An error occurred: " + errorThrown,
+                icon: "error",
+                button: "OK",
+              });
+            }
+          });
+
+        $(document).on("click", "#delete-btn", function (e) {
+          swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this item!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          }).then((confirmDelete) => {
+            if (confirmDelete) {
+              $("#spinner").show();
+              const itemId = $(this).closest(".video-item").attr("itemId");
+              const videoId = {
+                video_id: itemId,
+              };
+              $.ajax({
+                type: "POST",
+                url: "http://ysjcs.net:5014/deleteFavourite",
+                async: true,
+                dataType: "json",
+                data: JSON.stringify(videoId),
+                contentType: "application/json",
+                headers: {
+                  Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+              })
+                .done(function (result) {
+                  $("#spinner").hide();
+                  swal({
+                    title: "Success",
+                    text: "Deleting item....",
+                    icon: "success",
+                    button: null,
+                  });
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 2000);
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                  if (jqXHR.status === 401) {
+                    $("#spinner").hide();
+                    swal({
+                      title: "Error!",
+                      text: jqXHR.statusText,
+                      icon: "error",
+                      button: null,
+                    });
+                    setTimeout(() => {
+                      window.location.href = "/login";
+                    }, 2000);
+                  } else {
+                    $("#spinner").hide();
+                    swal({
+                      title: "Error!",
+                      text: jqXHR.responseJSON.message,
+                      icon: "error",
+                      button: "OK",
+                    });
+                  }
+                });
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header class="workout_type_header">
+      <img src="../static/images/red-arrow.svg" alt="arrow" id="arrow" />
+    </header>
+    <div class="workout_type_title">
+      <p id="chest">Favourites</p>
+      <div id="spinner">
+        <div class="spinner-icon"></div>
+      </div>
+    </div>
+    <div class="video-item-wrapper" id="video-item-wrapper"></div>
+  </body>
+</html>

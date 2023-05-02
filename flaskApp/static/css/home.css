@@ -1,0 +1,140 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: black;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: #fff;
+  padding: 8%;
+  align-items: center;
+}
+
+.navbar-user-icon {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-user-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.navbar-dropdown-menu {
+  position: absolute;
+  top: 110px;
+  right: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  display: none;
+  border-radius: 5px;
+}
+
+.navbar-user-icon:hover .navbar-dropdown-menu {
+  display: block;
+}
+
+.navbar-dropdown-menu-item {
+  padding: 5px;
+  cursor: pointer;
+  color: black;
+}
+
+.navbar-dropdown-menu-item:hover {
+  background-color: #f2f2f2;
+}
+
+.welcome-container {
+  margin-left: 43px;
+  margin-top: 20px;
+}
+
+.welcome-container h1 {
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.select-workout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+.select-workout {
+  background-color: white;
+  width: 90%;
+  height: 566px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.select-workout p {
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.workout-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 63px;
+}
+
+.workout-type img {
+  width: 100%;
+}
+
+.workout-type p {
+  margin-right: 100px;
+}
+
+@media only screen and (min-width: 390px) {
+  .welcome-container {
+    margin-left: 2.68rem;
+    margin-top: 3.33rem;
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .navbar-dropdown-menu {
+    position: absolute;
+    top: 130px;
+    right: 30px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    display: none;
+    border-radius: 5px;
+  }
+}
+
+@media only screen and (min-width: 860px) {
+  .navbar-dropdown-menu {
+    top: 170px;
+    right: 30px;
+  }
+}

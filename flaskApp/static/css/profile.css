@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat;
+}
+
+.profile_header {
+  background-color: black;
+  display: flex;
+  justify-content: left;
+  padding-top: 21px;
+  padding-left: 21px;
+  padding-bottom: 16px;
+}
+
+.profile_title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.profile_title p {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.editProfile-username {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.editProfile-email {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.input-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.input-1 input {
+  width: 254px;
+  height: 35px;
+  border-radius: 5px;
+  padding-left: 20px;
+}
+
+.input-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.input-2 input {
+  width: 254px;
+  height: 35px;
+  border-radius: 5px;
+  padding-left: 20px;
+}
+
+.profile-btn-wrapper {
+  display: flex;
+  justify-content: right;
+  width: 65%;
+  margin-top: 20px;
+}
+
+.profile-btn-username {
+  color: white;
+  background-color: #ce2929;
+  width: 74px;
+  height: 31px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 21px;
+  padding-right: 21px;
+  border: none;
+  border-radius: 5px;
+}
+
+.profile-btn-email {
+  color: white;
+  background-color: #ce2929;
+  width: 74px;
+  height: 31px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 21px;
+  padding-right: 21px;
+  border: none;
+  border-radius: 5px;
+}

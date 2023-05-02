@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/myworkout.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../static/js/functions.js"></script>
+    <script>
+      $(document).ready(function () {
+        redirectPage("#arrow", "/home");
+        redirectPage("#type-chest", "/mychest");
+        redirectPage("#type-back", "/myback");
+        redirectPage("#type-arm", "/myarm");
+        redirectPage("#type-abs", "/myabs");
+        redirectPage("#type-leg", "/myleg");
+        redirectPage("#type-shoulder", "/myshoulder");
+      });
+    </script>
+    <title>MyWorkout</title>
+  </head>
+  <body>
+    <header class="myworkout_header">
+      <img src="../static/images/red-arrow.svg" alt="arrow" id="arrow" />
+    </header>
+    <div class="myworkout_title">
+      <p>My workout</p>
+    </div>
+
+    <div class="select-workout-container">
+      <div class="select-workout">
+        <div class="workout-type" id="type-chest">
+          <img src="../static/images/chest-item.svg" alt="chest item" />
+        </div>
+
+        <div class="workout-type" id="type-back">
+          <img src="../static/images/back-item.svg" alt="back item" />
+        </div>
+
+        <div class="workout-type" id="type-arm">
+          <img src="../static/images/arm-item.svg" alt="arm item" />
+        </div>
+
+        <div class="workout-type" id="type-shoulder">
+          <img src="../static/images/shoulder-item.svg" alt="shoulder item" />
+        </div>
+
+        <div class="workout-type" id="type-leg">
+          <img src="../static/images/leg-item.svg" alt="leg item" />
+        </div>
+
+        <div class="workout-type" id="type-abs">
+          <img src="../static/images/abs-item.svg" alt="leg item" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

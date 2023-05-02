@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/login.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Overpass&display=swap"
+      rel="stylesheet"
+    />
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("form").on("submit", function (event) {
+          const userInfo = {
+            username: $("#username").val(),
+            password: $("#password").val(),
+          };
+          $.ajax({
+            type: "post",
+            url: "http://ysjcs.net:5014/auth/login",
+            async: true,
+            dataType: "json",
+            contentType: "application/json",
+            headers: {
+              Authorization:
+                "Basic " + btoa(userInfo.username + ":" + userInfo.password),
+            },
+            success: function () {
+              $.ajax({
+                url: "http://ysjcs.net:5014/auth/getToken",
+                type: "POST",
+                async: true,
+                dataType: "json",
+                contentType: "application/json",
+                headers: {
+                  Authorization:
+                    "Basic " +
+                    btoa(userInfo.username + ":" + userInfo.password),
+                },
+                success: function (result) {
+                  $("#spinner").hide();
+                  localStorage.setItem("token", result.token);
+                  swal({
+                    title: "Success",
+                    text: "Logging you in....",
+                    icon: "success",
+                    button: null,
+                  });
+                  setTimeout(() => {
+                    window.location.href = "/home";
+                  }, 3000);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                  $("#spinner").hide();
+                  swal({
+                    title: "Error!",
+                    text: "An error occurred: " + errorThrown,
+                    icon: "error",
+                    button: "OK",
+                  });
+                },
+              });
+            },
+            error: function (xhr, status, error) {
+              swal({
+                title: "Error!",
+                text: xhr.responseJSON.message,
+                icon: "error",
+                button: "OK",
+              });
+            },
+          });
+          event.preventDefault();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <img src="../static/images/logo.svg" alt="logo" />
+    </header>
+    <main>
+      <p class="form-text">Login to your account</p>
+      <form class="login-form" method="POST">
+        <input
+          type="username"
+          id="username"
+          name="username"
+          placeholder="username"
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="password"
+        />
+        <button type="submit">Login</button>
+      </form>
+      <div class="login-text">
+        <p>Don't have an account? <a href="/register">Register</a></p>
+      </div>
+    </main>
+  </body>
+</html>

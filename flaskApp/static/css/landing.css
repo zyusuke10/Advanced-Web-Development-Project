@@ -1,0 +1,81 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  background-color: #ce2929;
+  border-radius: 17px;
+}
+
+header {
+  display: flex;
+  justify-content: left;
+  padding: 10%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.landing-text {
+  color: white;
+  font-family: Montserrat;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 39.01px;
+  padding-left: 70px;
+  padding-right: 70px;
+  padding-bottom: 32px;
+}
+
+.landing-img {
+  width: 263px;
+  height: 296px;
+  margin-bottom: 46px;
+}
+
+.register-btn-container {
+  background-color: #ce2929;
+  width: 302px;
+  height: 38px;
+  border-radius: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-p {
+  color: white;
+  font-size: 15px;
+  font-family: Montserrat;
+  padding: 8px;
+}
+
+.login-btn-container {
+  background-color: #ce2929;
+  width: 302px;
+  height: 38px;
+  border-radius: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-textbox{
+    background-color: #ce2929;
+    color: white;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: Montserrat;
+}

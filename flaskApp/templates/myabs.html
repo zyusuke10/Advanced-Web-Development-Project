@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/myworkout.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../static/js/functions.js"></script>
+    <script>
+      generate_myWorkout_page(
+        "Abs",
+        "#exercise-name",
+        "#sets",
+        "#reps",
+        "#kg",
+        ".add-exercise-btn"
+      );
+    </script>
+    <title>MyAbsWorkout</title>
+  </head>
+  <body>
+    <header class="myworkout_header">
+      <img src="../static/images/red-arrow.svg" alt="arrow" id="arrow" />
+    </header>
+    <div class="myworkout_title">
+      <p>ABS</p>
+    </div>
+    <form class="addExercise" methods="POST">
+      <div class="form-inner-wrapper">
+        <div class="exercise-name-wrapper">
+          <label for="exercise-name">Exercise name</label>
+          <input type="text" id="exercise-name" name="exercise-name" />
+        </div>
+        <div class="exercise-stats-wrapper">
+          <div class="sets-wrapper">
+            <label for="sets">Sets</label>
+            <input type="number" id="sets" name="sets" />
+          </div>
+          <div class="reps-wrapper">
+            <label for="reps">Reps</label>
+            <input type="number" id="reps" name="reps" />
+          </div>
+          <div class="kg-wrapper">
+            <label for="kg">Kg</label>
+            <input type="number" id="kg" name="kg" step="any" />
+          </div>
+        </div>
+      </div>
+      <div class="add-exercise-btn-wrapper">
+        <button type="submit" class="add-exercise-btn">Add Exercise</button>
+      </div>
+    </form>
+    <div class="workout-item-wrapper"></div>
+    <div id="spinner">
+      <div class="spinner-icon"></div>
+    </div>
+  </body>
+</html>

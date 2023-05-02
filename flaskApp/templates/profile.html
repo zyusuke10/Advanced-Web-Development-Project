@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="../static/css/profile.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../static/js/functions.js"></script>
+    <script>
+      $(document).ready(function () {
+        redirectPage("#arrow", "/home");
+        $.ajax({
+          type: "GET",
+          url: "http://ysjcs.net:5014/getUser",
+          dataType: "json",
+          async: true,
+        })
+          .done(function (result) {
+            id = result.data[0];
+            username = result.data[1];
+            email = result.data[2];
+            $("#username").val(username);
+            $("#email").val(email);
+          })
+          .fail(function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 401) {
+              swal({
+                title: "Error!",
+                text: "An error occurred: " + errorThrown + "....",
+                icon: "error",
+                button: null,
+              });
+              setTimeout(() => {
+                window.location.href = "/login";
+              }, 2000);
+            } else {
+              swal({
+                title: "Error!",
+                text: "An error occurred: " + errorThrown,
+                icon: "error",
+                button: "OK",
+              });
+            }
+          });
+
+        $(".editProfile-username").on("submit", function (e) {
+          e.preventDefault();
+          const profileInfo = {
+            username: $("#username").val(),
+            user_id: id,
+          };
+          $.ajax({
+            type: "POST",
+            url: "http://ysjcs.net:5014/updateUsername",
+            dataType: "json",
+            contentType: "application/json",
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+            data: JSON.stringify(profileInfo),
+            async: true,
+          })
+            .done(function (result) {
+              swal({
+                title: "Success",
+                text: result.message,
+                icon: "success",
+                button: "OK",
+              });
+            })
+            .fail(function (jqXHR, errorThrown) {
+              if (jqXHR.status === 401) {
+                swal({
+                  title: "Error!",
+                  text: jqXHR.statusText,
+                  icon: "error",
+                  button: null,
+                });
+                setTimeout(() => {
+                  window.location.href = "/login";
+                }, 2000);
+              } else {
+                swal({
+                  title: "Error!",
+                  text: jqXHR.responseJSON.message,
+                  icon: "error",
+                  button: "OK",
+                });
+              }
+            });
+        });
+
+        $(".editProfile-email").on("submit", function (e) {
+          e.preventDefault();
+          const profileInfo = {
+            email: $("#email").val(),
+            user_id: id,
+          };
+          $.ajax({
+            type: "POST",
+            url: "http://ysjcs.net:5014/updateEmail",
+            dataType: "json",
+            contentType: "application/json",
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+            data: JSON.stringify(profileInfo),
+            async: true,
+          })
+            .done(function (result) {
+              swal({
+                title: "Success",
+                text: result.message,
+                icon: "success",
+                button: "OK",
+              });
+            })
+            .fail(function (jqXHR, errorThrown) {
+              if (jqXHR.status === 401) {
+                swal({
+                  title: "Error!",
+                  text: jqXHR.statusText,
+                  icon: "error",
+                  button: null,
+                });
+                setTimeout(() => {
+                  window.location.href = "/login";
+                }, 2000);
+              } else {
+                swal({
+                  title: "Error!",
+                  text: jqXHR.responseJSON.message,
+                  icon: "error",
+                  button: "OK",
+                });
+              }
+            });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header class="profile_header">
+      <img src="../static/images/red-arrow.svg" alt="arrow" id="arrow" />
+    </header>
+    <div class="profile_title">
+      <p>Profile</p>
+    </div>
+    <div class="profile-wrapper">
+      <form method="POST" class="editProfile-username">
+        <div class="input-1">
+          <label for="username">username</label>
+          <input type="text" name="username" id="username" />
+          <div class="profile-btn-wrapper">
+            <button class="profile-btn-username" type="submit">Save</button>
+          </div>
+        </div>
+      </form>
+      <form method="POST" class="editProfile-email">
+        <div class="input-2">
+          <label for="email">email</label>
+          <input type="text" name="email" id="email" />
+          <div class="profile-btn-wrapper">
+            <button class="profile-btn-email" type="submit">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

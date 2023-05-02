@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat;
+}
+
+.workout_type_header {
+  background-color: black;
+  display: flex;
+  justify-content: left;
+  padding-top: 21px;
+  padding-left: 21px;
+  padding-bottom: 16px;
+}
+
+.workout_type_title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.workout_type_title p {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.video-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video {
+  border: 1px solid black;
+  border-radius: 33px;
+  width: 367px;
+  height: 213px;
+  margin-top: 34px;
+  margin-bottom: 17px;
+  margin-left: 10px;
+  margin: 10px;
+}
+
+.thumbnail {
+  border-radius: 33px;
+  width: 364px;
+  height: 210px;
+}
+
+.video-title {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.add-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 230px;
+  border-bottom: 1px solid black;
+}
+
+#delete-btn {
+  width: 44px;
+  height: 44px;
+}
+
+.no-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-top: 2rem;
+  color: red;
+}
+
+.empty-icon {
+  width: 150px;
+  height: 150px;
+}
+
+#spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.spinner-icon {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
